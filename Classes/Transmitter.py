@@ -57,7 +57,9 @@ class AntennaSystem(object):
             return self._transformer.transform(self.pos1, self.pos2, h_ellipsoid)
 
     def Calculate_distance_to(self, other):
-        return 0 #WIP
+        self_coords = self.get_ecef_coordinates()
+        other_coords = other.get_ecef_coordinates()
+        return math.sqrt(sum((a-b)**2 for a, b in zip(self_coords, other_coords))) #zip для красоты, тут он попарно вычисляет квадрат разности координат
 
 
     
