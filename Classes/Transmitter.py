@@ -61,6 +61,20 @@ class Transmitter(object):
         other_coords = other.get_ecef_coordinates()
         return math.sqrt(sum((a-b)**2 for a, b in zip(self_coords, other_coords))) #zip для красоты, тут он попарно вычисляет квадрат разности координат
 
+    def Calculate_signal_noise_ratio(self, other_ant, l2, l3, l4, l5, rate_of_transm, temperature): #self- земной!!!! если нужно обработать еще случай, когда он космический то сообщи.
+        Knd_earth = self.convert_to_decibel(self.coefficientOfDirectedAction)
+        Knd_space = self.convert_to_decibel(other_ant.coefficientOfDirectedAction)
+        Sat_distance = self.Calculate_distance_to(self, other_ant)
+        l1= self.convert_to_decibel(16*(3.1415**2)*Sat_distance**2/(self.waveLength**2))
+        EIRP_self = self.outputOfTransmitter + Knd_earth - self.lossInTransmitter
+        Accepted_isotropic_power = EIRP_self - l1 - l2 - l3
+        Power_of_recived_signal = Accepted_isotropic_power + Knd_space - l4
+        temperature_decibel = self.convert_to_decibel(temperature)
+        Spectral_velocity_of_noice = -228.6 + temperature_decibel
+        Signal_noise_ratio = Power_of_recived_signal - Spectral_velocity_of_noice - rate_of_transm - l5
+        return Signal_noise_ratio
+
+
 
     
     
