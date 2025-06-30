@@ -1,7 +1,7 @@
 ﻿import  math
 from pyproj import Transformer
 
-class AntennaSystem(object):
+class Transmitter(object):
     def __init__(self, outputOfTransmitter, lossInTransmitter, AntennaDiameter, focusOfAntenna, antennaTypeCoefficient, frequency, pos1, pos2, pos3, isGround):
         # 
         # Конструктор класса антенной системы
