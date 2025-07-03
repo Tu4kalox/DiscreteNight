@@ -1,12 +1,3 @@
 {
-<<<<<<< Updated upstream
-  "Interpreter": "env\\Scripts\\python.exe",
-  "TestFramework": "Pytest"
-=======
-  "TestFramework": "Pytest",
   "Interpreter": "Workspace|Workspace|env"
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }
