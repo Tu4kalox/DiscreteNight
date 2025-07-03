@@ -3,8 +3,6 @@
   "WorkspaceRootPath": "C:\\Documents\\GitHub\\DiscreteNight\\",
   "Documents": [
     {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Documents\\GitHub\\DiscreteNight\\Classes\\Transmitter.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Classes\\Transmitter.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
@@ -19,35 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Documents\\GitHub\\DiscreteNight\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
-=======
-=======
->>>>>>> Stashed changes
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Documents\\GitHub\\DiscreteNight\\UI.kv||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:UI.kv||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Documents\\GitHub\\DiscreteNight\\satellites.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:satellites.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Documents\\GitHub\\DiscreteNight\\antennas.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:antennas.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Documents\\GitHub\\DiscreteNight\\Classes\\Transmitter.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Classes\\Transmitter.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Documents\\GitHub\\DiscreteNight\\requirements.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:requirements.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Documents\\GitHub\\DiscreteNight\\App.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:App.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     }
   ],
   "DocumentGroupContainers": [
@@ -57,8 +26,6 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           "SelectedChildIndex": 3,
           "Children": [
             {
@@ -108,161 +75,9 @@
               "RelativeDocumentMoniker": "Classes\\Transmitter.py",
               "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\Classes\\Transmitter.py",
               "RelativeToolTip": "Classes\\Transmitter.py",
-              "ViewState": "AgIAADMAAAAAAAAAAAAAAD8AAAC3AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2025-06-25T18:29:30.326Z",
-=======
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-=======
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
->>>>>>> Stashed changes
-              "DocumentIndex": 0,
-              "Title": "UI.kv",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\UI.kv",
-              "RelativeDocumentMoniker": "UI.kv",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\UI.kv",
-              "RelativeToolTip": "UI.kv",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPkAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-07-01T06:32:54.666Z",
-              "IsPinned": true,
->>>>>>> Stashed changes
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "satellites.txt",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\satellites.txt",
-              "RelativeDocumentMoniker": "satellites.txt",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\satellites.txt",
-              "RelativeToolTip": "satellites.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-07-03T09:50:10.608Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "antennas.txt",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\antennas.txt",
-              "RelativeDocumentMoniker": "antennas.txt",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\antennas.txt",
-              "RelativeToolTip": "antennas.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-07-03T09:49:49.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Transmitter.py",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\Classes\\Transmitter.py",
-              "RelativeDocumentMoniker": "Classes\\Transmitter.py",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\Classes\\Transmitter.py",
-              "RelativeToolTip": "Classes\\Transmitter.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAACBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-07-02T18:10:57.466Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "requirements.txt",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\requirements.txt",
-              "RelativeDocumentMoniker": "requirements.txt",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\requirements.txt",
-              "RelativeToolTip": "requirements.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-07-03T09:12:27.919Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "App.py",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\App.py",
-              "RelativeDocumentMoniker": "App.py",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\App.py",
-              "RelativeToolTip": "App.py",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-07-01T06:32:10.168Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "satellites.txt",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\satellites.txt",
-              "RelativeDocumentMoniker": "satellites.txt",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\satellites.txt",
-              "RelativeToolTip": "satellites.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-07-03T09:50:10.608Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "antennas.txt",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\antennas.txt",
-              "RelativeDocumentMoniker": "antennas.txt",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\antennas.txt",
-              "RelativeToolTip": "antennas.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-07-03T09:49:49.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Transmitter.py",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\Classes\\Transmitter.py",
-              "RelativeDocumentMoniker": "Classes\\Transmitter.py",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\Classes\\Transmitter.py",
-              "RelativeToolTip": "Classes\\Transmitter.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAACBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-07-02T18:10:57.466Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "requirements.txt",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\requirements.txt",
-              "RelativeDocumentMoniker": "requirements.txt",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\requirements.txt",
-              "RelativeToolTip": "requirements.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-07-03T09:12:27.919Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "App.py",
-              "DocumentMoniker": "C:\\Documents\\GitHub\\DiscreteNight\\App.py",
-              "RelativeDocumentMoniker": "App.py",
-              "ToolTip": "C:\\Documents\\GitHub\\DiscreteNight\\App.py",
-              "RelativeToolTip": "App.py",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-07-01T06:32:10.168Z",
               "EditorCaption": ""
             },
             {
