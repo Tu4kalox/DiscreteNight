@@ -1,0 +1,572 @@
+<BaseButton@Button>:
+    background_normal: ''
+    background_color: 0, 0, 0, 0  
+    size_hint: None, None
+    size: 250, 50
+    canvas.before:
+        Color:
+            rgba: (0.18, 0.18, 0.18, 1) if self.state == 'normal' else (0.26, 0.26, 0.26, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<MenuButton@BaseButton>:
+    canvas.before:
+        Color:
+            rgba: (0.11, 0.11, 0.13, 1) if self.state == 'normal' else (0.21, 0.21, 0.26, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<BackButton@BaseButton>:
+    size: 150, 50
+    canvas.before:
+        Color:
+            rgba: (0.18, 0.18, 0.18, 1) if self.state == 'normal' else (0.29, 0.29, 0.29, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<ExitButton@BaseButton>:
+    canvas.before:
+        Color:
+            rgba: (0.11, 0.11, 0.13, 1) if self.state == 'normal' else (0.83, 0.18, 0.18, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+<MenuScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.07, 0.07, 0.07, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 15
+            size_hint: None, None
+            size: self.minimum_size
+
+            Label:
+                text: 'Калькулятор?'
+                font_size: '28sp'
+                size_hint_y: None
+                height: 60
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                bold: True
+                color: 1, 1, 1, 1
+
+            BoxLayout:
+                size_hint_y: 5
+
+            MenuButton:
+                text: 'К расчетам'
+                on_release: 
+                    app.root.transition.direction = 'left'
+                    app.root.current = 'calc'
+
+            MenuButton:
+                text: 'Оптимизация'
+                on_release: 
+                    app.root.transition.direction = 'left'
+                    app.root.current = 'optimize'
+
+            MenuButton:
+                text: "Добавить или изменить антенну"
+                on_release: 
+                    app.root.transition.direction = 'left'
+                    app.root.current = 'antedit'
+
+            MenuButton:
+                text: "Добавить или изменить спутник"
+                on_release: 
+                    app.root.transition.direction = 'left'
+                    app.root.current = 'satedit'
+
+            ExitButton:
+                text: 'Сохранить и выйти'
+                on_release: root.save_and_exit()
+            Label:
+                id: debug
+                text: ''
+
+<CalcScreen>:
+
+    canvas.before:
+        Color:
+            rgba: 0.07, 0.07, 0.07, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 30
+        spacing: 25
+
+        Label:
+            text: 'Расчет чего-то сложного'
+            font_size: '28sp'
+            size_hint_y: None
+            height: 60
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            bold: True
+            color: 1, 1, 1, 1
+
+        Label:
+            id: result_label
+            text: ''
+            size_hint_y: None
+            height: 40
+            color: 1, 0.8, 0, 1
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            italic: True
+
+        GridLayout:
+            cols: 2
+            spacing: 20
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 15
+                spacing: 15
+                canvas.before:
+                    Color:
+                        rgba: 0.15, 0.15, 0.15, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15]
+
+                Spinner:
+                    id: antenna_spinner
+                    text: 'Выберите антенну'
+                    values: app.antennas_names
+                    size_hint_y: None
+                    size: 280, 50
+                    background_color: 0.12, 0.12, 0.12, 1
+                    color: 1, 1, 1, 1
+
+                BaseButton:
+                    pos_hint: {'center_x': 0.5}
+                    text: 'Задать параметры антенны'
+                    size_hint_y:  None
+                    size: 280, 50
+                    on_release: 
+                        app.root.transition.direction = 'up'
+                        app.root.current = 'tempant'
+
+                Label:
+                    text: 'Координаты антенны:'
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_y: None
+                    height: 30
+                    color: 1, 1, 1, 1
+                    bold: True
+
+                TextInput:
+                    id: ant_cords_input
+                    hint_text: 'широта; долгота; высота над у.м.'
+                    multiline: False
+                    size_hint_y: None
+                    size: 280, 50
+                    background_color: 0.1, 0.1, 0.1, 1
+                    foreground_color: 1, 1, 1, 1
+                    padding: [10, 10, 10, 10]
+                    font_size: 16
+
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 15
+                spacing: 15
+                canvas.before:
+                    Color:
+                        rgba: 0.15, 0.15, 0.15, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15]
+
+                Spinner:
+                    id: satellite_spinner
+                    text: 'Выберите спутник'
+                    values: app.satellites_names
+                    size_hint_y: None
+                    size: 280, 50
+                    background_color: 0.12, 0.12, 0.12, 1
+                    color: 1, 1, 1, 1
+
+                BaseButton:
+                    pos_hint: {'center_x': 0.5}
+                    text: 'Задать параметры спутника'
+                    size_hint_y: None
+                    size: 280, 50
+                    on_release:
+                        app.root.transition.direction = 'up'
+                        app.root.current = 'tempsat'
+
+                Label:
+                    text: 'Координаты спутника:'
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_y: None
+                    height: 30
+                    color: 1, 1, 1, 1
+                    bold: True
+
+                TextInput:
+                    id: sat_cords_input
+                    hint_text: 'x; y; z'
+                    multiline: False
+                    size_hint_y: None
+                    size: 280, 50
+                    background_color: 0.1, 0.1, 0.1, 1
+                    foreground_color: 1, 1, 1, 1
+                    padding: [10, 10, 10, 10]
+                    font_size: 16
+        BoxLayout:
+            padding: [5, 0, 5, 0]
+            spacing: 15
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+
+
+
+            BaseButton:
+                text: 'Рассчитать для антенны-приемника'
+                size_hint: None, None
+                size: 280, 50
+                pos_hint: {'center_x': 0.5}
+                on_release: root.calculate('from_antenna')
+
+            TextInput:
+                id: other_params_input
+                hint_text: 'l2; l3; l4; l5; R; T'
+                multiline: False
+                size_hint_y: None
+                size_hint_x: 1
+                height: 50
+                background_color: 0.1, 0.1, 0.1, 1
+                foreground_color: 1, 1, 1, 1
+                font_size: 16
+
+            BaseButton:
+                text: 'Рассчитать для спутника-приемника'
+                size_hint: None, None
+                size: 280, 50
+                pos_hint: {'center_x': 0.5}
+                on_release: root.calculate('from_satellite')
+
+
+
+        BackButton:
+            text: 'Назад в меню'
+            size_hint: None, None
+            size: 150, 40
+            pos_hint: {'center_x': 0.5}
+            on_release:
+                app.root.transition.direction = 'right'
+                app.root.current = 'menu'
+
+
+<TempAntennaConstructorScreen>:
+    
+<TempSatelliteConstructorScreen>:
+
+<OptimizeScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.07, 0.07, 0.07, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    GridLayout:
+        cols: 3
+        padding: 20
+        spacing: 10
+
+        BoxLayout:
+            size_hint_x: 0.25
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.5  
+            spacing: 25
+            padding: 30
+
+            Label:
+                text: 'Оптимизация чего-то сложного'
+                font_size: '28sp'
+                size_hint_y: None
+                height: 60
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                bold: True
+                color: 1, 1, 1, 1
+
+            Label:
+                id: result_label
+                text: ''
+                size_hint_y: None
+                height: 40
+                color: 1, 0.8, 0, 1
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                italic: True
+
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 15
+                spacing: 15
+                size_hint_y: None
+                height: self.minimum_height
+                canvas.before:
+                    Color:
+                        rgba: 0.15, 0.15, 0.15, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15]
+
+                Spinner:
+                    text: 'Выберите спутник'
+                    size_hint: None, None
+                    size: 280, 50
+                    background_color: 0.12, 0.12, 0.12, 1
+                    color: 1, 1, 1, 1
+                    pos_hint: {'center_x': 0.5}
+
+                BaseButton:
+                    pos_hint: {'center_x': 0.5}
+                    text: 'Задать параметры спутника'
+                    size_hint: None, None
+                    size: 280, 50
+
+                Label:
+                    text: 'Координаты спутника:'
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_y: None
+                    height: 30
+                    color: 1, 1, 1, 1
+                    bold: True
+
+                TextInput:
+                    id: sat_input
+                    hint_text: 'x; y; z'
+                    multiline: False
+                    size_hint: None, None
+                    size: 280, 50
+                    background_color: 0.1, 0.1, 0.1, 1
+                    foreground_color: 1, 1, 1, 1
+                    padding: [10, 10, 10, 10]
+                    font_size: 16
+                    pos_hint: {'center_x': 0.5}
+
+                Label:
+                    text: 'Координаты антенны:'
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint_y: None
+                    height: 30
+                    color: 1, 1, 1, 1
+                    bold: True
+
+                TextInput:
+                    id: ant_input
+                    hint_text: 'широта; долгота; высота над у. м.'
+                    multiline: False
+                    size_hint: None, None
+                    size: 280, 50
+                    background_color: 0.1, 0.1, 0.1, 1
+                    foreground_color: 1, 1, 1, 1
+                    padding: [10, 10, 10, 10]
+                    font_size: 16
+                    pos_hint: {'center_x': 0.5}
+
+
+            BaseButton:
+                text: 'Оптимизировать'
+                size_hint: None, None
+                size: 280, 50
+                pos_hint: {'center_x': 0.5}
+                on_release:
+                    root.calculate()
+
+            BackButton:
+                text: 'Назад в меню'
+                size_hint: None, None
+                size: 150, 40
+                pos_hint: {'center_x': 0.5}
+                on_release:
+                    app.root.transition.direction = 'right'
+                    app.root.current = 'menu'
+
+        BoxLayout:
+            size_hint_x: 0.25
+
+<BaseConstructorScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.07, 0.07, 0.07, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 30
+        spacing: 20
+
+        Label:
+            id: title_label
+            text: root.title_text
+            font_size: '28sp'
+            size_hint_y: None
+            height: 50
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            bold: True
+            color: 1, 1, 1, 1
+
+        Spinner:
+            id: spinner
+            text: root.choose_text
+            on_text: root.fill_inputs()
+            size_hint: None, None
+            size: 250, 50
+            pos_hint: {'center_x' : 0.5}
+            values: root.obj_names
+
+        GridLayout:
+            cols: 2
+            spacing: 15
+            size_hint_y: None
+            height: self.minimum_height
+
+            Label:
+                text: 'Название'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: name
+                multiline: False
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Мощность передатчика (Вт):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: output_transmitter
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Потери в передатчике (дБ):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: loss_transmitter
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Диаметр антенны (м):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: antenna_diameter
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Фокусное расстояние (м):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: focus_antenna
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'КПД антенны (от 0 до 1):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: antenna_efficiency
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Рабочая частота (Гц):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: frequency
+                multiline: False
+                input_filter: 'int'
+                size_hint_y: None
+                height: 40
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 20
+            padding: [100, 0]
+
+            BaseButton:
+                text: 'Сохранить'
+                on_release: root.save_params()
+
+            BackButton:
+                text: 'Назад'
+                on_release:
+                    app.root.transition.direction = 'right'
+                    app.root.current = 'menu'
