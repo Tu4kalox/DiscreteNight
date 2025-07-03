@@ -99,6 +99,7 @@
                 text: ''
 
 <CalcScreen>:
+
     canvas.before:
         Color:
             rgba: 0.07, 0.07, 0.07, 1
@@ -162,6 +163,9 @@
                     text: 'Задать параметры антенны'
                     size_hint_y:  None
                     size: 280, 50
+                    on_release: 
+                        app.root.transition.direction = 'up'
+                        app.root.current = 'tempant'
 
                 Label:
                     text: 'Координаты антенны:'
@@ -210,6 +214,9 @@
                     text: 'Задать параметры спутника'
                     size_hint_y: None
                     size: 280, 50
+                    on_release:
+                        app.root.transition.direction = 'up'
+                        app.root.current = 'tempsat'
 
                 Label:
                     text: 'Координаты спутника:'
@@ -275,6 +282,11 @@
             on_release:
                 app.root.transition.direction = 'right'
                 app.root.current = 'menu'
+
+
+<TempAntennaConstructorScreen>:
+    
+<TempSatelliteConstructorScreen>:
 
 <OptimizeScreen>:
     canvas.before:
@@ -441,17 +453,29 @@
         Spinner:
             id: spinner
             text: root.choose_text
-            
+            on_text: root.fill_inputs()
             size_hint: None, None
             size: 250, 50
             pos_hint: {'center_x' : 0.5}
-            
+            values: root.obj_names
 
         GridLayout:
             cols: 2
             spacing: 15
             size_hint_y: None
             height: self.minimum_height
+
+            Label:
+                text: 'Название'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: name
+                multiline: False
+                size_hint_y: None
+                height: 40
 
             Label:
                 text: 'Мощность передатчика (Вт):'

@@ -36,7 +36,7 @@ class MenuScreen(Screen):
                 lines = f.read().splitlines()
             App.get_running_app().satellites_list = lines
         except FileNotFoundError:
-            self.ids.debug.text +='\nА тхт со спутниками чоте сделал?'
+            self.ids.debug.text +='\nА тхт со спутниками тебе что сделал?'
 
     def save_and_exit(self):
         with open('antennas.txt', 'w', encoding='utf-8') as f:
@@ -52,21 +52,19 @@ class CalcScreen(Screen):
             selected_antenna_name = self.ids.antenna_spinner.text
             selected_satellite_name = self.ids.satellite_spinner.text
 
-            with open('antennas.txt', 'r', encoding='utf-8') as f:
-                lines = f.read().splitlines()
-                for line in lines:
-                    params = line.split(';')
-                    if params[0] == selected_antenna_name:
-                        cords = self.ids.ant_cords_input.text.split(';')
-                        antenna = Transmitter(*params[1:7], *cords, True)
 
-            with open('satellites.txt', 'r', encoding='utf-8') as f:
-                lines = f.read().splitlines()
-                for line in lines:
-                    params = line.split(';')
-                    if params[0] == selected_satellite_name:
-                        cords = self.ids.sat_cords_input.text.split(';')
-                        satellite = Transmitter(*params[1:7], *cords, False)
+            for line in App.get_running_app().antennas_list:
+                params = line.split(';')
+                if params[0] == selected_antenna_name:
+                    cords = self.ids.ant_cords_input.text.split(';')
+                    antenna = Transmitter(*params[1:7], *cords, True)
+
+
+            for line in App.get_running_app().satellites_list:
+                params = line.split(';')
+                if params[0] == selected_satellite_name:
+                    cords = self.ids.sat_cords_input.text.split(';')
+                    satellite = Transmitter(*params[1:7], *cords, False)
 
             other_params = self.ids.other_params_input.text.split(';')
 
@@ -80,6 +78,13 @@ class CalcScreen(Screen):
 
         self.ids.result_label.text = str(result)
 
+
+class TempAntennaConstructorScreen(Screen):
+    pass
+
+class TempSatelliteConstructorScreen(Screen):
+    pass
+
 class OptimizeScreen(Screen): 
     def optimize(self):
         pass
@@ -87,25 +92,104 @@ class OptimizeScreen(Screen):
 
 class BaseConstructorScreen(Screen):
     file_name = StringProperty()
+    obj_list = ListProperty()
+    selected_object = ListProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def fill_inputs(self):
+        selected_name = self.ids.spinner.text
+        if selected_name != 'Добавить':
+            for line in self.obj_list:
+                sline = line.split(';')
+                if sline[0] == selected_name:
+                    self.ids.name.text = sline[0]
+                    self.ids.output_transmitter.text = sline[1]
+                    self.ids.loss_transmitter.text = sline[2]
+                    self.ids.antenna_diameter.text = sline[3]
+                    self.ids.focus_antenna.text = sline[4]
+                    self.ids.antenna_efficiency.text = sline[5]
+                    self.ids.frequency.text = sline[6]
+                    break
+        else:
+            self.ids.output_transmitter.text = ''
+            self.ids.loss_transmitter.text = ''
+            self.ids.antenna_diameter.text = ''
+            self.ids.focus_antenna.text = ''
+            self.ids.antenna_efficiency.text = ''
+            self.ids.frequency.text = ''
+
+    def save_params(self):
+
+            if self.ids.spinner.text == 'Добавить':
+                name = self.ids.name.text
+                output_transmitter = self.ids.output_transmitter.text
+                loss_transmitter = self.ids.loss_transmitter.text 
+                antenna_diameter = self.ids.antenna_diameter.text
+                focus_antenna = self.ids.focus_antenna.text
+                antenna_efficiency = self.ids.antenna_efficiency.text
+                frequency = self.ids.frequency.text
+                self.obj_list.append(f'{name};{output_transmitter};{loss_transmitter};{antenna_diameter};{focus_antenna};{antenna_efficiency};{frequency}')
+                self.ids.title_label.text = 'Успешно добавлено!'
+            else:
+                name = self.ids.name.text
+                output_transmitter = self.ids.output_transmitter.text
+                loss_transmitter = self.ids.loss_transmitter.text 
+                antenna_diameter = self.ids.antenna_diameter.text
+                focus_antenna = self.ids.focus_antenna.text
+                antenna_efficiency = self.ids.antenna_efficiency.text
+                frequency = self.ids.frequency.text
+                i = -1
+                for obj_name in self.obj_names:
+                    if name == obj_name:
+                        print(self.obj_list[i])
+                        print(f'{name};{output_transmitter};{loss_transmitter};{antenna_diameter};{focus_antenna};{antenna_efficiency};{frequency}')
+                        self.obj_list[i] = f'{name};{output_transmitter};{loss_transmitter};{antenna_diameter};{focus_antenna};{antenna_efficiency};{frequency}'
+                    i += 1
+                    self.ids.title_label.text = 'Успешно изменено!'
+
+
+    @property
+    def obj_names(self):
+        return []
+    @property
+    def obj_list(self):
+        return []
+
 
 class AntennaConstructorScreen(BaseConstructorScreen):
     title_text = "Конструктор антенны"
     choose_text = "Выберете антенну"
     file_name = "antennas.txt"
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    @property
+    def obj_names(self):
+        return App.get_running_app().antennas_names_with_add
+
+    @property
+    def obj_list(self):
+        return App.get_running_app().antennas_list
 
 
 class SatelliteConstructorScreen(BaseConstructorScreen):
     title_text = "Конструктор спутника"
     choose_text = "Выберете спутник"
     file_name = "satellites.txt"
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    @property
+    def obj_names(self):
+        return App.get_running_app().satellites_names_with_add
+
+    @property
+    def obj_list(self):
+        return App.get_running_app().satellites_list
 
 class CalcApp(App):
     antennas_list = ListProperty()
@@ -115,13 +199,13 @@ class CalcApp(App):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.bind(antennas_list = self.update_antennas_names)
-        self.bind(satellites_list = self.update_satellites_names)
+        self.bind(antennas_list = self.update_antennas)
+        self.bind(satellites_list = self.update_satellites)
 
-    def update_antennas_names(self, instance, value):
+    def update_antennas(self, instance, value):
         self.antennas_names = [line.split(';')[0] for line in value]
 
-    def update_satellites_names(self, instance, value):
+    def update_satellites(self, instance, value):
         self.satellites_names = [line.split(';')[0] for line in value]
 
     def build(self):
@@ -136,6 +220,8 @@ class CalcApp(App):
 
         sm.add_widget(MenuScreen(name="menu"))
         sm.add_widget(CalcScreen(name="calc"))
+        sm.add_widget(TempAntennaConstructorScreen(name="tempant"))
+        sm.add_widget(TempSatelliteConstructorScreen(name="tempsat"))
         sm.add_widget(OptimizeScreen(name="optimize"))
         sm.add_widget(AntennaConstructorScreen(name="antedit"))
         sm.add_widget(SatelliteConstructorScreen(name="satedit"))
@@ -144,6 +230,20 @@ class CalcApp(App):
     def _update_bg_rect(self, instance, value):
         self.bg_rect.size = instance.size
         self.bg_rect.pos = instance.pos
+
+    @property
+    def antennas_names_with_add(self):
+        names = list(self.antennas_names)
+        if 'Добавить' in names:
+            names.remove('Добавить')
+        return ['Добавить'] + names
+
+    @property
+    def satellites_names_with_add(self):
+        names = list(self.satellites_names)
+        if "Добавить" in names:
+            names.remove("Добавить")
+        return ["Добавить"] + names
 
 
 
