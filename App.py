@@ -1,8 +1,25 @@
 from turtle import update
+import ctypes
 from kivy.config import Config
+
+
+user32 = ctypes.windll.user32
+screen_width = user32.GetSystemMetrics(0)  
+screen_height = user32.GetSystemMetrics(1)  
+
+
+width_ratio = 800 / 1920     
+height_ratio = 600 / 1080    
+
+
+window_width = int(screen_width * width_ratio)
+window_height = int(screen_height * height_ratio)
+
+
+Config.set('graphics', 'width', str(window_width))
+Config.set('graphics', 'height', str(window_height))
 Config.set('graphics', 'resizable', '0')
-Config.set('graphics', 'width', '800')
-Config.set('graphics', 'height', '600')
+
 from os import close
 from tokenize import String
 from kivy.app import App
@@ -51,20 +68,28 @@ class CalcScreen(Screen):
         try:
             selected_antenna_name = self.ids.antenna_spinner.text
             selected_satellite_name = self.ids.satellite_spinner.text
+            temp_ant_screen = App.get_running_app().root.get_screen('tempant')
+            temp_sat_screen = App.get_running_app().root.get_screen('tempsat')
 
+            if selected_antenna_name == 'Добавить':
+                cords = self.ids.ant_cords_input.text.split(';')
+                antenna = Transmitter(*temp_ant_screen.params_list, *cords, True)
+            else:
+                for line in App.get_running_app().antennas_list:
+                    params = line.split(';')
+                    if params[0] == selected_antenna_name:
+                        cords = self.ids.ant_cords_input.text.split(';')
+                        antenna = Transmitter(*params[1:7], *cords, True)
 
-            for line in App.get_running_app().antennas_list:
-                params = line.split(';')
-                if params[0] == selected_antenna_name:
-                    cords = self.ids.ant_cords_input.text.split(';')
-                    antenna = Transmitter(*params[1:7], *cords, True)
-
-
-            for line in App.get_running_app().satellites_list:
-                params = line.split(';')
-                if params[0] == selected_satellite_name:
-                    cords = self.ids.sat_cords_input.text.split(';')
-                    satellite = Transmitter(*params[1:7], *cords, False)
+            if selected_satellite_name == 'Добавить':
+                cords = self.ids.sat_cords_input.text.split(';')
+                satellite = Transmitter(*temp_sat_screen.params_list, *cords, True)
+            else:
+                for line in App.get_running_app().satellites_list:
+                    params = line.split(';')
+                    if params[0] == selected_satellite_name:
+                        cords = self.ids.sat_cords_input.text.split(';')
+                        satellite = Transmitter(*params[1:7], *cords, False)
 
             other_params = self.ids.other_params_input.text.split(';')
 
@@ -79,11 +104,43 @@ class CalcScreen(Screen):
         self.ids.result_label.text = str(result)
 
 
-class TempAntennaConstructorScreen(Screen):
-    pass
 
-class TempSatelliteConstructorScreen(Screen):
-    pass
+class BaseTempConstructorScreen(Screen):
+    params_list = ListProperty()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def save_params(self):
+        output_transmitter = self.ids.output_transmitter.text
+        loss_transmitter = self.ids.loss_transmitter.text 
+        antenna_diameter = self.ids.antenna_diameter.text
+        focus_antenna = self.ids.focus_antenna.text
+        antenna_efficiency = self.ids.antenna_efficiency.text
+        frequency = self.ids.frequency.text
+
+        no_empty_params = True
+        params = [output_transmitter, loss_transmitter, antenna_diameter, focus_antenna, antenna_efficiency, frequency]
+        for param in params:
+            if param == '':
+                no_empty_params = False
+                break
+
+        if no_empty_params:
+            self.params_list = params
+            self.ids.title_label.text = 'Успешно добавлено!'
+        else:
+            self.params_list = []
+            self.ids.title_label.text = 'Введите все параметры!'
+
+class TempAntennaConstructorScreen(BaseTempConstructorScreen):
+    title_text = 'Задать антенну'
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class TempSatelliteConstructorScreen(BaseTempConstructorScreen):
+    title_text = 'Задать спутник'
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 class OptimizeScreen(Screen): 
     def optimize(self):
@@ -99,11 +156,11 @@ class BaseConstructorScreen(Screen):
         super().__init__(**kwargs)
 
     def fill_inputs(self):
-        selected_name = self.ids.spinner.text
-        if selected_name != 'Добавить':
+        name = self.selected_name
+        if name != 'Добавить':
             for line in self.obj_list:
                 sline = line.split(';')
-                if sline[0] == selected_name:
+                if sline[0] == name:
                     self.ids.name.text = sline[0]
                     self.ids.output_transmitter.text = sline[1]
                     self.ids.loss_transmitter.text = sline[2]
@@ -113,6 +170,7 @@ class BaseConstructorScreen(Screen):
                     self.ids.frequency.text = sline[6]
                     break
         else:
+            self.ids.name.text = ''
             self.ids.output_transmitter.text = ''
             self.ids.loss_transmitter.text = ''
             self.ids.antenna_diameter.text = ''
@@ -122,32 +180,39 @@ class BaseConstructorScreen(Screen):
 
     def save_params(self):
 
-            if self.ids.spinner.text == 'Добавить':
-                name = self.ids.name.text
-                output_transmitter = self.ids.output_transmitter.text
-                loss_transmitter = self.ids.loss_transmitter.text 
-                antenna_diameter = self.ids.antenna_diameter.text
-                focus_antenna = self.ids.focus_antenna.text
-                antenna_efficiency = self.ids.antenna_efficiency.text
-                frequency = self.ids.frequency.text
-                self.obj_list.append(f'{name};{output_transmitter};{loss_transmitter};{antenna_diameter};{focus_antenna};{antenna_efficiency};{frequency}')
-                self.ids.title_label.text = 'Успешно добавлено!'
-            else:
-                name = self.ids.name.text
-                output_transmitter = self.ids.output_transmitter.text
-                loss_transmitter = self.ids.loss_transmitter.text 
-                antenna_diameter = self.ids.antenna_diameter.text
-                focus_antenna = self.ids.focus_antenna.text
-                antenna_efficiency = self.ids.antenna_efficiency.text
-                frequency = self.ids.frequency.text
-                i = -1
-                for obj_name in self.obj_names:
-                    if name == obj_name:
-                        print(self.obj_list[i])
-                        print(f'{name};{output_transmitter};{loss_transmitter};{antenna_diameter};{focus_antenna};{antenna_efficiency};{frequency}')
-                        self.obj_list[i] = f'{name};{output_transmitter};{loss_transmitter};{antenna_diameter};{focus_antenna};{antenna_efficiency};{frequency}'
-                    i += 1
-                    self.ids.title_label.text = 'Успешно изменено!'
+        name = self.ids.name.text
+        output_transmitter = self.ids.output_transmitter.text
+        loss_transmitter = self.ids.loss_transmitter.text 
+        antenna_diameter = self.ids.antenna_diameter.text
+        focus_antenna = self.ids.focus_antenna.text
+        antenna_efficiency = self.ids.antenna_efficiency.text
+        frequency = self.ids.frequency.text
+        params_list = [name, output_transmitter, loss_transmitter, antenna_diameter, focus_antenna, antenna_efficiency, frequency]
+        no_empty_params = True
+        for param in params_list:
+            if param == '':
+                no_empty_params = False
+                break
+
+        if no_empty_params == False:
+            self.ids.title_label.text = 'Введите все параметры!'
+        elif name == 'Добавить':
+            self.ids.title_label.text = 'Нельзя добавить "Добавить"!'
+        elif name in self.obj_names and self.ids.spinner.text == 'Добавить':
+            self.ids.title_label.text = 'Объект с таким именем уже существует!'
+        elif self.ids.spinner.text == 'Добавить':
+            self.obj_list.append(f'{name};{output_transmitter};{loss_transmitter};{antenna_diameter};{focus_antenna};{antenna_efficiency};{frequency}')
+            self.ids.spinner.values = self.obj_names
+            self.ids.title_label.text = 'Успешно добавлено!'
+        else:
+            i = -1
+            for obj_name in self.obj_names:
+                if self.selected_name == obj_name:
+                    self.obj_list[i] = f'{name};{output_transmitter};{loss_transmitter};{antenna_diameter};{focus_antenna};{antenna_efficiency};{frequency}'
+                    break
+                i += 1
+            self.ids.spinner.values = self.obj_names
+            self.ids.title_label.text = 'Успешно изменено!'
 
 
     @property
@@ -156,6 +221,10 @@ class BaseConstructorScreen(Screen):
     @property
     def obj_list(self):
         return []
+    @property
+    def selected_name(self):
+        return self.ids.spinner.text
+
 
 
 class AntennaConstructorScreen(BaseConstructorScreen):

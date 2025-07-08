@@ -152,7 +152,7 @@
                 Spinner:
                     id: antenna_spinner
                     text: 'Выберите антенну'
-                    values: app.antennas_names
+                    values: app.antennas_names_with_add
                     size_hint_y: None
                     size: 280, 50
                     background_color: 0.12, 0.12, 0.12, 1
@@ -203,7 +203,7 @@
                 Spinner:
                     id: satellite_spinner
                     text: 'Выберите спутник'
-                    values: app.satellites_names
+                    values: app.satellites_names_with_add
                     size_hint_y: None
                     size: 280, 50
                     background_color: 0.12, 0.12, 0.12, 1
@@ -248,7 +248,7 @@
 
 
             BaseButton:
-                text: 'Рассчитать для антенны-приемника'
+                text: 'Рассчитать для антенны-передатчика'
                 size_hint: None, None
                 size: 280, 50
                 pos_hint: {'center_x': 0.5}
@@ -266,7 +266,7 @@
                 font_size: 16
 
             BaseButton:
-                text: 'Рассчитать для спутника-приемника'
+                text: 'Рассчитать для спутника-передатчика'
                 size_hint: None, None
                 size: 280, 50
                 pos_hint: {'center_x': 0.5}
@@ -284,9 +284,130 @@
                 app.root.current = 'menu'
 
 
-<TempAntennaConstructorScreen>:
-    
-<TempSatelliteConstructorScreen>:
+<BaseTempConstructorScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.07, 0.07, 0.07, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 30
+        spacing: 20
+
+        Label:
+            id: title_label
+            text: root.title_text
+            font_size: '28sp'
+            size_hint_y: None
+            height: 50
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            bold: True
+            color: 1, 1, 1, 1
+
+        GridLayout:
+            cols: 2
+            spacing: 15
+            size_hint_y: None
+            height: self.minimum_height
+
+            Label:
+                text: 'Мощность передатчика (Вт):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: output_transmitter
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Потери в передатчике (дБ):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: loss_transmitter
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Диаметр антенны (м):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: antenna_diameter
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Фокусное расстояние (м):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: focus_antenna
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'КПД антенны (от 0 до 1):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: antenna_efficiency
+                multiline: False
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+
+            Label:
+                text: 'Рабочая частота (Гц):'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+                color: 1, 1, 1, 1
+            TextInput:
+                id: frequency
+                multiline: False
+                input_filter: 'int'
+                size_hint_y: None
+                height: 40
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 20
+            padding: [100, 0]
+
+            BaseButton:
+                text: 'Сохранить'
+                on_release: root.save_params()
+
+            BackButton:
+                text: 'Назад'
+                on_release:
+                    app.root.transition.direction = 'down'
+                    app.root.current = 'calc'
 
 <OptimizeScreen>:
     canvas.before:
