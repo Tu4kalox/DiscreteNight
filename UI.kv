@@ -54,7 +54,7 @@
             size: self.minimum_size
 
             Label:
-                text: 'Калькулятор?'
+                text: 'Система анализа канала связи'
                 font_size: '28sp'
                 size_hint_y: None
                 height: 60
@@ -74,7 +74,7 @@
                     app.root.current = 'calc'
 
             MenuButton:
-                text: 'Оптимизация'
+                text: 'Поиск той самой'
                 on_release: 
                     app.root.transition.direction = 'left'
                     app.root.current = 'optimize'
@@ -113,7 +113,7 @@
         spacing: 25
 
         Label:
-            text: 'Расчет чего-то сложного'
+            text: 'Расчет отношения сигнал/шум'
             font_size: '28sp'
             size_hint_y: None
             height: 60
@@ -407,7 +407,7 @@
                 text: 'Назад'
                 on_release:
                     app.root.transition.direction = 'down'
-                    app.root.current = 'calc'
+                    app.root.current = 'optimize'
 
 <OptimizeScreen>:
     canvas.before:
@@ -418,40 +418,15 @@
             pos: self.pos
 
     GridLayout:
-        cols: 3
+        cols: 2
         padding: 20
         spacing: 10
 
         BoxLayout:
-            size_hint_x: 0.25
-
-        BoxLayout:
             orientation: 'vertical'
-            size_hint_x: 0.5  
-            spacing: 25
-            padding: 30
-
-            Label:
-                text: 'Оптимизация чего-то сложного'
-                font_size: '28sp'
-                size_hint_y: None
-                height: 60
-                halign: 'center'
-                valign: 'middle'
-                text_size: self.size
-                bold: True
-                color: 1, 1, 1, 1
-
-            Label:
-                id: result_label
-                text: ''
-                size_hint_y: None
-                height: 40
-                color: 1, 0.8, 0, 1
-                halign: 'center'
-                valign: 'middle'
-                text_size: self.size
-                italic: True
+            size_hint_x: 0.45
+            spacing: 20
+            padding: [30, 50, 30, 30] 
 
             BoxLayout:
                 orientation: 'vertical'
@@ -468,83 +443,167 @@
                         radius: [15]
 
                 Spinner:
+                    id: satellite_spinner
                     text: 'Выберите спутник'
                     size_hint: None, None
                     size: 280, 50
                     background_color: 0.12, 0.12, 0.12, 1
                     color: 1, 1, 1, 1
                     pos_hint: {'center_x': 0.5}
+                    values: app.satellites_names_with_add
 
                 BaseButton:
                     pos_hint: {'center_x': 0.5}
                     text: 'Задать параметры спутника'
                     size_hint: None, None
                     size: 280, 50
+                    on_release: 
+                        app.root.transition.direction = 'up'
+                        app.root.current = 'tempopt'
 
                 Label:
                     text: 'Координаты спутника:'
-                    halign: 'center'
-                    valign: 'middle'
-                    text_size: self.size
                     size_hint_y: None
                     height: 30
                     color: 1, 1, 1, 1
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
                     bold: True
 
-                TextInput:
-                    id: sat_input
-                    hint_text: 'x; y; z'
-                    multiline: False
-                    size_hint: None, None
-                    size: 280, 50
-                    background_color: 0.1, 0.1, 0.1, 1
-                    foreground_color: 1, 1, 1, 1
-                    padding: [10, 10, 10, 10]
-                    font_size: 16
-                    pos_hint: {'center_x': 0.5}
+                BoxLayout:
+                    size_hint_y: None
+                    height: 50
+                    padding: [20, 0]
+                    TextInput:
+                        id: sat_cords_input
+                        hint_text: 'x; y; z'
+                        multiline: False
+                        size_hint: 1, None
+                        height: 50
+                        background_color: 0.1, 0.1, 0.1, 1
+                        foreground_color: 1, 1, 1, 1
+                        padding: [10, 10, 10, 10]
+                        font_size: 16
 
                 Label:
                     text: 'Координаты антенны:'
-                    halign: 'center'
-                    valign: 'middle'
-                    text_size: self.size
                     size_hint_y: None
                     height: 30
                     color: 1, 1, 1, 1
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
                     bold: True
 
-                TextInput:
-                    id: ant_input
-                    hint_text: 'широта; долгота; высота над у. м.'
-                    multiline: False
-                    size_hint: None, None
-                    size: 280, 50
-                    background_color: 0.1, 0.1, 0.1, 1
-                    foreground_color: 1, 1, 1, 1
-                    padding: [10, 10, 10, 10]
-                    font_size: 16
-                    pos_hint: {'center_x': 0.5}
+                BoxLayout:
+                    size_hint_y: None
+                    height: 50
+                    padding: [20, 0]
+                    TextInput:
+                        id: ant_cords_input
+                        hint_text: 'широта; долгота; высота над у. м.'
+                        multiline: False
+                        size_hint: 1, None
+                        height: 50
+                        background_color: 0.1, 0.1, 0.1, 1
+                        foreground_color: 1, 1, 1, 1
+                        padding: [10, 10, 10, 10]
+                        font_size: 16
 
+                Label:
+                    text: 'Прочие параметры:'
+                    size_hint_y: None
+                    height: 30
+                    color: 1, 1, 1, 1
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+                    bold: True
 
+                BoxLayout:
+                    size_hint_y: None
+                    height: 50
+                    padding: [20, 0]
+                    TextInput:
+                        id: other_params_input
+                        hint_text: 'l2; l3; l4; l5; R; T'
+                        multiline: False
+                        size_hint: 1, None
+                        height: 50
+                        background_color: 0.1, 0.1, 0.1, 1
+                        foreground_color: 1, 1, 1, 1
+                        padding: [10, 10, 10, 10]
+                        font_size: 16
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.4
+            padding: 15
+            spacing: 10
+            canvas.before:
+                Color:
+                    rgba: 0.15, 0.15, 0.15, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [15]
+
+            Label:
+                text: 'Подходящие антенны'
+                font_size: '20sp'
+                size_hint_y: None
+                height: 40
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                bold: True
+                color: 1, 1, 1, 1
+
+            ScrollView:
+                do_scroll_x: False
+
+                GridLayout:
+                    id: antenna_list
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 10
+                    padding: 10
+
+                    Label:
+                        id: result_label
+                        text: ''
+                        color: 1, 1, 1, 1
+                        font_size: 16
+                        halign: 'left'
+                        valign: 'top'
+                        text_size: self.width, None
+                        size_hint_y: None
+                        height: self.texture_size[1]
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 15
+            size_hint: None, None
+            height: 50
             BaseButton:
-                text: 'Оптимизировать'
+                text: 'Подобрать антенны'
                 size_hint: None, None
-                size: 280, 50
-                pos_hint: {'center_x': 0.5}
+                size: 200, 50
                 on_release:
-                    root.calculate()
+                    root.optimize()
 
             BackButton:
                 text: 'Назад в меню'
                 size_hint: None, None
-                size: 150, 40
-                pos_hint: {'center_x': 0.5}
+                size: 150, 50
                 on_release:
                     app.root.transition.direction = 'right'
                     app.root.current = 'menu'
 
         BoxLayout:
-            size_hint_x: 0.25
+            size_hint: None, None
+            height: 50
 
 <BaseConstructorScreen>:
     canvas.before:

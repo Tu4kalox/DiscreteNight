@@ -83,7 +83,7 @@ class CalcScreen(Screen):
 
             if selected_satellite_name == 'Добавить':
                 cords = self.ids.sat_cords_input.text.split(';')
-                satellite = Transmitter(*temp_sat_screen.params_list, *cords, True)
+                satellite = Transmitter(*temp_sat_screen.params_list, *cords, False)
             else:
                 for line in App.get_running_app().satellites_list:
                     params = line.split(';')
@@ -144,8 +144,46 @@ class TempSatelliteConstructorScreen(BaseTempConstructorScreen):
 
 class OptimizeScreen(Screen): 
     def optimize(self):
-        pass
+        try:
+            selected_satellite_name = self.ids.satellite_spinner.text
+            temp_sat_screen = App.get_running_app().root.get_screen('tempopt')
+            results_list = []
+            result = ''
 
+            if selected_satellite_name == 'Добавить':
+                cords = self.ids.sat_cords_input.text.split(';')
+                satellite = Transmitter(*temp_sat_screen.params_list, *cords, False)
+            else:
+                for line in App.get_running_app().satellites_list:
+                    params = line.split(';')
+                    if params[0] == selected_satellite_name:
+                        cords = self.ids.sat_cords_input.text.split(';')
+                        satellite = Transmitter(*params[1:7], *cords, False)
+
+            other_params = self.ids.other_params_input.text.split(';')
+
+            for ant in App.get_running_app().antennas_list:
+                split_ant = ant.split(';')
+                antenna = Transmitter(*split_ant[1:7], *cords, True)
+                snrat = antenna.Calculate_signal_noise_ratio(satellite, *other_params) 
+                result_antenna_str = f'Отношение сигнал/шум для {split_ant[0]}: {snrat}\n\nМощность: {split_ant[1]} Вт; Потери: {split_ant[2]} дБ; Диаметр: {split_ant[3]} м; Фокусное расстояние: {split_ant[4]} м; КПД: {split_ant[5]}; Частота: {split_ant[6]} Гц\n{"-" * 76}\n\n'
+                results_list.append((snrat, result_antenna_str))
+                print(snrat)
+
+            results_list.sort(key = lambda x: x[0], reverse = True)
+            print(results_list)
+            for snrat, results in results_list:
+                result += results
+
+        except:
+            result = f'Ошибка: некорректный ввод'
+
+        self.ids.result_label.text = str(result)
+
+class TempOptimizeConstructorScreen(BaseTempConstructorScreen):
+    title_text = 'Задать спутник'
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 class BaseConstructorScreen(Screen):
     file_name = StringProperty()
@@ -292,6 +330,7 @@ class CalcApp(App):
         sm.add_widget(TempAntennaConstructorScreen(name="tempant"))
         sm.add_widget(TempSatelliteConstructorScreen(name="tempsat"))
         sm.add_widget(OptimizeScreen(name="optimize"))
+        sm.add_widget(TempOptimizeConstructorScreen(name="tempopt"))
         sm.add_widget(AntennaConstructorScreen(name="antedit"))
         sm.add_widget(SatelliteConstructorScreen(name="satedit"))
         return sm
