@@ -170,7 +170,7 @@ class OptimizeScreen(Screen):
                 results_list.append((snrat, result_antenna_str))
                 print(snrat)
 
-            results_list.sort(key = lambda x: x[0], reverse = True)
+            results_list.sort(key = lambda x: x[0])
             print(results_list)
             for snrat, results in results_list:
                 result += results
